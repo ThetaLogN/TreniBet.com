@@ -1,0 +1,39 @@
+# OS
+.DS_Store
+Thumbs.db
+
+# IDE
+.vscode/
+.idea/
+*.swp
+*.sublime-project
+*.sublime-workspace
+
+# Python / Django
+__pycache__/
+*.py[cod]
+*$py.class
+*.sqlite3
+db.sqlite3
+/backend/staticfiles/
+/backend/media/
+/backend/venv/
+/backend/env/
+/backend/.venv/
+/backend/*.egg-info/
+/backend/dist/
+/backend/build/
+/backend/backend_debug.log
+/backend/celerybeat-schedule
+
+# Environment files
+.env
+/backend/.env
+
+# Node / Frontend (if any)
+node_modules/
+dist/
+build/
+
+# Docker
+.dockerignore

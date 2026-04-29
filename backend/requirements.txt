@@ -1,0 +1,10 @@
+django>=4.2
+djangorestframework
+django-cors-headers
+requests
+psycopg2-binary
+celery
+redis
+django-environ
+gunicorn
+whitenoise

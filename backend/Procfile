@@ -1,0 +1,11 @@
+# Procfile — usato da Railway per avviare i processi
+# Railway avvia automaticamente tutti i processi qui definiti
+
+# Server web Django (Gunicorn)
+web: gunicorn trenibet.wsgi --bind 0.0.0.0:$PORT --workers 2
+
+# Celery worker (esegue i task in background)
+worker: celery -A trenibet worker --loglevel=info
+
+# Celery beat (scheduler — lancia resolve_bets ogni 60 secondi)
+beat: celery -A trenibet beat --loglevel=info

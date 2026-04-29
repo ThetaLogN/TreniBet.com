@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="it">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>TreniBet</title>
+  <meta name="description" content="Applicazione in tempo reale per scommettere sui ritardi dei treni in Italia.">
+  <link rel="stylesheet" href="css/style.css?v=79">
+  <link rel="icon"
+    href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🚂</text></svg>">
+</head>
+
+<body>
+
+  <!-- HEADER -->
+  <header class="app-header">
+    <div class="logo" onclick="App.showHomePage()" style="cursor: pointer;" title="Torna alla Home">
+      <span class="logo-badge">TreniBET</span>
+    </div>
+    <div class="header-actions">
+      <div id="user-wallet" class="user-wallet hidden">
+        <span id="user-tokens" class="wallet-amount">0</span>
+        <span class="wallet-icon">$</span>
+      </div>
+      <button class="btn-login" id="btn-login-header" onclick="App.showLoginModal()">Accedi</button>
+      <button class="btn-login hidden" id="btn-profile-header" onclick="App.toggleMenu()"
+        title="Apri menu">@User</button>
+    </div>
+
+    <!-- Dropdown Menu -->
+    <div class="dropdown-menu" id="dropdown-menu">
+
+      <a href="#" id="menu-bets-link" class="hidden" onclick="App.showMyBetsPage()">Le Mie Scommesse </a>
+      <a href="#" id="menu-leaderboard-link" onclick="App.showLeaderboardPage()">Classifica</a>
+      <a href="#" id="menu-wins-link" onclick="App.showWinsPage()">Ultime Vincite</a>
+      <a href="#" id="menu-verify-link" class="hidden" onclick="App.resendVerificationEmail()">Invia email di verifica</a>
+      <a href="#" id="dark-mode-toggle" onclick="App.toggleDarkMode()">Modalità Scura</a>
+      <a href="#" id="menu-logout-link" class="hidden" onclick="App.logout()">Esci</a>
+    </div>
+  </header>
+
+  <!-- MAIN CONTENT -->
+  <main id="main-content"></main>
+
+  <!-- Firebase Libraries (Compat version for simplicity in non-module environment) -->
+  <script src="https://www.gstatic.com/firebasejs/10.9.0/firebase-app-compat.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/10.9.0/firebase-auth-compat.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/10.9.0/firebase-firestore-compat.js"></script>
+
+  <script src="js/firebase.js?v=79"></script>
+  <script src="js/data.js?v=79"></script>
+  <script src="js/api.js?v=79"></script>
+  <script src="js/components.js?v=79"></script>
+  <script src="js/backend.js?v=79"></script>
+  <script src="js/app.js?v=79"></script>
+</body>
+
+</html>
