@@ -495,19 +495,26 @@ def place_bet(request):
     cache_key = f"odds_lock:{user.id}:{clean_train_id}:{clean_delay}"
     server_odds = cache.get(cache_key)
 
-    # Log di debug su file
-    with open("backend_debug.log", "a") as f:
-        f.write(f"[{datetime.now()}] GET: user={user.id} key={cache_key} result={server_odds}\n")
-
+    # if server_odds is None:
+    #     return Response({
+    #         "error": "Quota scaduta o non valida. Clicca su 'Calcola Quota' per aggiornare.",
+    #         "debug_key": cache_key # Temporaneo per debug
+    #     }, status=400)
     if server_odds is None:
         return Response({
-            "error": "Quota scaduta o non valida. Clicca su 'Calcola Quota' per aggiornare.",
-            "debug_key": cache_key # Temporaneo per debug
+            "error": "Quota scaduta o non valida. Clicca su 'Calcola Quota' per aggiornare."
         }, status=400)
 
     with transaction.atomic():
-        user.balance -= amount
-        user.save()
+        # Update atomico del bilancio per evitare race conditions
+        updated = UserProfile.objects.filter(
+            pk=user.pk,
+            balance__gte=amount
+        ).update(balance=F('balance') - amount)
+        
+        if not updated:
+            return Response({"error": "Token insufficienti o errore durante l'aggiornamento."}, status=400)
+
         bet = Bet.objects.create(
             user=user,
             bet_id=f"bet_{uuid.uuid4().hex[:16]}",
@@ -677,10 +684,6 @@ def get_odds(request, train_id):
         cache_key = f"odds_lock:{request.user.id}:{clean_train_id}:{clean_delay}"
         from django.core.cache import cache
         cache.set(cache_key, odds, timeout=60)
-        
-        # Log di debug su file
-        with open("backend_debug.log", "a") as f:
-            f.write(f"[{datetime.now()}] SET: user={request.user.id} key={cache_key} odds={odds}\n")
         
     return Response({"odds": odds})
 

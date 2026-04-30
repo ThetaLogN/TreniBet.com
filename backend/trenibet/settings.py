@@ -18,7 +18,7 @@ SECRET_KEY = env('SECRET_KEY')
 
 DEBUG = env('DEBUG', default=False)
 
-ALLOWED_HOSTS = env.list('ALLOWED_HOSTS', default=['*', 'trenibet.com', 'www.trenibet.com'])
+ALLOWED_HOSTS = env.list('ALLOWED_HOSTS', default=['trenibet.com', 'www.trenibet.com', 'localhost', '127.0.0.1'])
 
 # Importante per Cloudflare Tunnel
 CSRF_TRUSTED_ORIGINS = [

@@ -114,11 +114,10 @@ def resolve_bets():
                 bet.save()
 
                 if win_amount > 0:
+                    from django.db.models import F
                     UserProfile.objects.filter(pk=bet.user_id).update(
-                        balance=bet.user.balance + win_amount  # type: ignore
+                        balance=F('balance') + win_amount
                     )
-                    # Ricarica il balance aggiornato
-                    bet.user.refresh_from_db()
 
             print(f"[RESOLVER] Scommessa {bet.bet_id} risolta: {outcome} (+{win_amount}🪙)")
             resolved_count += 1
