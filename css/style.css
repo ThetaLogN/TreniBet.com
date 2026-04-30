@@ -7,7 +7,7 @@ body.dark-mode{--bg:#171717;--card:#262626;--text:#ffffff;--text2:#a3a3a3;--bord
 /* HEADER */
 .app-header{position:fixed;top:0;left:0;right:0;z-index:100;background:var(--card);border-bottom:1px solid var(--border);padding:0 16px;height:70px;display:flex;align-items:center;justify-content:space-between}
 .logo{display:flex;align-items:center;gap:12px;font-weight:700;font-size:22px;color:var(--accent);text-transform:uppercase}
-.logo-img{height:32px;width:auto;border-radius:4px;mix-blend-mode: multiply}
+.logo-img{height:44px;width:auto;border-radius:4px;mix-blend-mode: multiply}
 body.dark-mode .logo-img{mix-blend-mode: normal; filter: brightness(1.1)}
 .logo-text{letter-spacing:1px;color:var(--accent);font-weight:800}
 .header-actions{display:flex;align-items:center;gap:8px}
