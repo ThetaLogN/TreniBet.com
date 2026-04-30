@@ -317,6 +317,7 @@ def token_refresh(request):
         resp = requests.post(
             "https://securetoken.googleapis.com/v1/token",
             params={"key": settings.FIREBASE_WEB_API_KEY},
+            headers={"Referer": "https://trenibet.com"},
             json={"grant_type": "refresh_token", "refresh_token": refresh},
             timeout=10,
         )
