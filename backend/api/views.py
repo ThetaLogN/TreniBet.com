@@ -434,12 +434,15 @@ def global_wins(request):
     """
     wins = Bet.objects.filter(status='won').order_by('-resolved_at')[:30]
     data = []
+    from django.utils import timezone
     from datetime import datetime
     for w in wins:
-        # Converti il timestamp ms in data leggibile
+        # Converti il timestamp ms in data leggibile (Italia)
         date_str = ""
         if w.resolved_at:
-            date_str = datetime.fromtimestamp(w.resolved_at / 1000.0).strftime("%d/%m %H:%M")
+            dt = datetime.fromtimestamp(w.resolved_at / 1000.0, tz=timezone.utc)
+            local_dt = timezone.localtime(dt)
+            date_str = local_dt.strftime("%d/%m %H:%M")
             
         data.append({
             'username': w.user.nickname,

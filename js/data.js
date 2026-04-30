@@ -62,7 +62,7 @@ const ONBOARDING_STEPS = [
   },
   {
     title: 'Vinci in Diretta',
-    text: 'Se indovini il ritardo entro il 5% del valore reale, vinci la scommessa!',
+    text: 'Se indovini il ritardo reale, vinci la scommessa!',
   },
   {
     title: 'Accedi ogni giorno',
