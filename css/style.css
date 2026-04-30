@@ -5,15 +5,52 @@ body{font-family:'Inter', Arial, Helvetica, sans-serif;background:var(--bg);colo
 body.dark-mode{--bg:#171717;--card:#262626;--text:#ffffff;--text2:#a3a3a3;--border:#404040;--nav-bg:#171717;--shadow:none}
 
 /* HEADER */
-.app-header{position:fixed;top:0;left:0;right:0;z-index:100;background:var(--card);border-bottom:1px solid var(--border);padding:0 16px;height:70px;display:flex;align-items:center;justify-content:space-between}
-.logo{display:flex;align-items:center;gap:12px;font-weight:700;font-size:22px;color:var(--accent);text-transform:uppercase}
-.logo-img{height:44px;width:auto;border-radius:4px;mix-blend-mode: multiply}
+.app-header{position:fixed;top:0;left:0;right:0;z-index:100;background:var(--card);border-bottom:1px solid var(--border);padding:0 12px;height:64px;display:flex;align-items:center;justify-content:space-between}
+.logo{display:flex;align-items:center;gap:8px;font-weight:700;font-size:18px;color:var(--accent);text-transform:uppercase}
+.logo-img{height:36px;width:auto;border-radius:4px;mix-blend-mode: multiply}
 body.dark-mode .logo-img{mix-blend-mode: normal; filter: brightness(1.1)}
-.logo-text{letter-spacing:1px;color:var(--accent);font-weight:800}
-.header-actions{display:flex;align-items:center;gap:8px}
+.logo-text{letter-spacing:0.5px;color:var(--accent);font-weight:800}
+.header-actions{display:flex;align-items:center;gap:6px}
 .btn-login{background:var(--accent);color:#fff;border:none;padding:10px 20px;border-radius:6px;font-weight:600;font-size:14px;cursor:pointer}
 .btn-login:hover{background:var(--accent-hover)}
 .btn-icon-header{background:none;border:none;font-size:18px;cursor:pointer;padding:6px}
+.user-wallet {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  background: rgba(225, 29, 72, 0.08);
+  padding: 6px 14px;
+  border-radius: 50px;
+  border: 1px solid rgba(225, 29, 72, 0.15);
+  transition: all 0.2s ease;
+}
+.user-wallet:hover {
+  background: rgba(225, 29, 72, 0.12);
+  border-color: rgba(225, 29, 72, 0.3);
+}
+.wallet-amount {
+  font-weight: 800;
+  font-size: 16px;
+  color: var(--text);
+  font-variant-numeric: tabular-nums;
+}
+.wallet-icon {
+  color: #fff;
+  background: linear-gradient(135deg, var(--accent), #ff4d6d);
+  width: 24px;
+  height: 24px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 50%;
+  font-size: 13px;
+  font-weight: 900;
+  box-shadow: 0 2px 6px rgba(225, 29, 72, 0.4);
+}
+body.dark-mode .user-wallet {
+  background: rgba(225, 29, 72, 0.15);
+  border-color: rgba(225, 29, 72, 0.25);
+}
 
 /* DROPDOWN MENU */
 .dropdown-menu{position:absolute;top:56px;right:12px;background:var(--card);border:1px solid var(--border);border-radius:var(--radius);padding:8px 0;min-width:200px;box-shadow:var(--shadow);display:none;z-index:200}
@@ -38,7 +75,7 @@ body.dark-mode .logo-img{mix-blend-mode: normal; filter: brightness(1.1)}
 .nav-item.active{color:var(--accent)}
 .nav-item .nav-icon{font-size:20px}
 .nav-item-bet{position:relative;margin-top:-20px}
-.nav-item-bet .nav-icon{width:52px;height:52px;background:var(--accent);border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:28px;color:#fff;box-shadow:0 4px 15px rgba(215,30,30,.35)}
+.nav-item-bet .nav-icon{width:48px;height:48px;background:var(--accent);border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:24px;color:#fff;box-shadow:0 4px 15px rgba(215,30,30,.35)}
 
 /* MAIN CONTENT */
 #main-content{max-width:1200px;margin:0 auto;padding:0 12px}
@@ -277,12 +314,42 @@ body.dark-mode .logo-img{mix-blend-mode: normal; filter: brightness(1.1)}
 @media(max-width:768px){
   .trains-grid,.daily-markets-grid{grid-template-columns:1fr}
   .social-cards-row{grid-template-columns:1fr}
-  .train-times .time-value{font-size:16px}
+  .train-times .time-value{font-size:18px}
+  body{padding-top:100px}
+  .app-header{height:60px}
+  .logo-text{display:none} /* Nascondi il testo TreniBet se lo spazio è poco */
+  .logo{font-size:16px}
+  .header-actions{gap:4px}
+  .btn-profile-header{font-size:12px; padding: 6px 10px;}
 }
 @media(max-width:480px){
-  .train-card-header{flex-direction:column}
-  .train-pool{text-align:left}
+  .train-card-header{flex-direction:row; align-items: flex-start; justify-content: space-between;}
+  .train-pool{text-align:right}
+  .train-number{font-size:16px}
+  .pool-amount{font-size:14px !important}
+  .pool-label{font-size:9px !important}
+  .station{font-size:12px}
+  .time-value{font-size:16px !important}
+  .time-label{font-size:8px !important}
+  .stats-bar{font-size:11px; padding: 10px; gap: 4px 10px; justify-content: space-between;}
+  .stats-bar span{flex: 1 1 auto; justify-content: center;}
+  .user-wallet{padding: 4px 10px; gap: 6px;}
+  .wallet-amount{font-size: 14px;}
+  .wallet-icon{width: 18px; height: 18px; font-size: 10px;}
+  .btn-login{padding: 8px 12px; font-size: 12px;}
 }
+@media(max-width:360px){
+    .logo-img{height:32px}
+    .header-actions{gap:4px}
+    .wallet-icon{display:none}
+}
+
+/* STATS BAR */
+.stats-bar{display:flex;flex-wrap:wrap;gap:8px 16px;margin-bottom:16px;font-size:13px;color:var(--text2);background:var(--card);padding:10px 14px;border-radius:var(--radius);border:1px solid var(--border)}
+.stats-bar span{display:flex;align-items:center;gap:4px}
+.stats-bar strong{color:var(--text)}
+.stat-delayed strong{color:var(--accent)}
+
 .hidden { display: none !important; }
 
 /* AUTH MODAL ENHANCEMENTS */
@@ -485,93 +552,6 @@ body.dark-mode .pbc-odds {
   transform: translate(-50%, -50%);
   font-size: 14px;
   z-index: 2;
-}
-
-/* WINS PAGE */
-.wins-page {
-  padding: 20px;
-  max-width: 800px;
-  margin: 0 auto;
-}
-
-.wins-feed {
-  display: flex;
-  flex-direction: column;
-  gap: 15px;
-  margin-top: 20px;
-}
-
-.win-card {
-  background: var(--bg2);
-  border-radius: 12px;
-  padding: 15px;
-  border-left: 5px solid #4CAF50;
-  box-shadow: 0 4px 15px rgba(0,0,0,0.1);
-  transition: transform 0.2s;
-}
-
-.win-card:hover {
-  transform: scale(1.02);
-}
-
-.win-header {
-  display: flex;
-  justify-content: space-between;
-  margin-bottom: 10px;
-  font-size: 0.9em;
-  color: var(--text2);
-}
-
-.win-user {
-  font-weight: bold;
-  color: var(--primary);
-}
-
-.win-train {
-  font-size: 1.1em;
-  font-weight: bold;
-  margin-bottom: 10px;
-}
-
-.win-stats {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  background: var(--bg1);
-  padding: 10px;
-  border-radius: 8px;
-}
-
-.win-stat {
-  display: flex;
-  flex-direction: column;
-}
-
-.ws-label {
-  font-size: 0.75em;
-  color: var(--text2);
-  text-transform: uppercase;
-}
-
-.ws-value {
-  font-weight: bold;
-}
-
-.win-total {
-  text-align: right;
-}
-
-.wt-label {
-  font-size: 0.75em;
-  color: #4CAF50;
-  font-weight: bold;
-  display: block;
-}
-
-.wt-value {
-  font-size: 1.3em;
-  font-weight: 900;
-  color: #4CAF50;
 }
 
 /* WINS PAGE */

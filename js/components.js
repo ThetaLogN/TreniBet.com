@@ -37,9 +37,9 @@ const Components = {
             <span class="train-number" style="color: ${typeInfo.color}">${train.number}</span>
             ${statusBadge}
           </div>
-          <div class="train-pool" style="text-align: right;">
-            <span class="pool-amount" style="font-size: 16px; font-weight: bold; color: var(--accent);">${poolAmount} $</span>
-            <span class="pool-label" style="display: block; font-size: 11px; color: var(--text2); text-transform: uppercase;">${betCount} Puntate</span>
+          <div class="train-pool">
+            <span class="pool-amount">${poolAmount} $</span>
+            <span class="pool-label">${betCount} Puntate</span>
           </div>
         </div>
 
@@ -166,10 +166,10 @@ const Components = {
     const avgDelay = total > 0 ? Math.round(trains.reduce((s, t) => s + Math.max(0, t.currentDelay), 0) / total) : 0;
     return `
       <div class="stats-bar">
-        <span> <strong>${total}</strong> treni</span>
-        <span> <strong>${onTime}</strong> puntuali</span>
-        <span class="stat-delayed"> <strong>${delayed}</strong> in ritardo</span>
-        <span>⏱ Media <strong>+${avgDelay}m</strong></span>
+        <span><strong>${total}</strong> treni</span>
+        <span><strong>${onTime}</strong> puntuali</span>
+        <span class="stat-delayed"><strong>${delayed}</strong> in ritardo</span>
+        <span><strong>⏱ Media +${avgDelay}m</strong></span>
       </div>
     `;
   },
