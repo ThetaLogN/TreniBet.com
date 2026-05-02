@@ -243,7 +243,7 @@ const Components = {
 
             <div class="bet-distribution-widget" id="bet-distribution-widget">
               <div class="bet-distribution-header">
-                <h4>📊 Puntate degli altri</h4>
+                <h4>Puntate degli altri</h4>
                 <span class="bet-distribution-total" id="bet-dist-total">...</span>
               </div>
               <div class="bet-chart-container" id="bet-chart-container">

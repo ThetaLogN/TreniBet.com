@@ -824,7 +824,7 @@ const App = {
       if (totalEl) totalEl.textContent = `${total} puntate`;
 
       if (total === 0) {
-        container.innerHTML = '<div class="bet-chart-empty">Nessuna puntata su questo treno. Sii il primo! 🎯</div>';
+        container.innerHTML = '<div class="bet-chart-empty">Nessuna puntata su questo treno. Sii il primo!</div>';
         return;
       }
 
@@ -1003,15 +1003,15 @@ const App = {
 
   updateEstimatedArrival(delayMinutes) {
     if (!this.currentTrainPlannedArrival) return;
-    
+
     try {
       const [hours, minutes] = this.currentTrainPlannedArrival.split(':').map(Number);
       const date = new Date();
       date.setHours(hours, minutes, 0, 0);
-      
+
       // Aggiungi i minuti di ritardo
       date.setMinutes(date.getMinutes() + parseInt(delayMinutes));
-      
+
       const newTime = date.toLocaleTimeString('it-IT', { hour: '2-digit', minute: '2-digit' });
       const el = document.getElementById('estimated-arrival-time');
       if (el) el.textContent = newTime;
@@ -1023,7 +1023,7 @@ const App = {
   async prepareBet(trainId) {
     const btn = document.getElementById('btn-bet-main');
     const slider = document.getElementById('bet-delay-slider');
-    
+
     // Forza la lettura del valore attuale dello slider
     const predictedDelay = slider ? parseInt(slider.value) : (this.currentTrainDelay || 0);
 
@@ -1052,7 +1052,7 @@ const App = {
       // Aggiorna la UI con la quota ufficiale
       const oddsEl = document.querySelector('.odds-banner span');
       if (oddsEl) oddsEl.textContent = `x${officialOdds.toFixed(2)}`;
-      
+
       const winValEl = document.getElementById('win-preview-value');
       if (winValEl) {
         winValEl.textContent = (this.betAmount * officialOdds).toFixed(0);
@@ -1075,7 +1075,7 @@ const App = {
 
   startBetTimer(seconds, trainId) {
     this.stopBetTimer(); // Pulisci eventuali timer precedenti
-    
+
     const btn = document.getElementById('btn-bet-main');
     let timeLeft = seconds;
 
@@ -1149,12 +1149,12 @@ const App = {
     if (!btn || !modalContent) return;
 
     const originalContent = btn.innerHTML;
-    
+
     // 1. BLOCCO INPUT E INTERFACCIA
     btn.disabled = true;
     btn.classList.add('loading');
     modalContent.classList.add('loading-active');
-    
+
     const setStatus = (text) => {
       btn.innerHTML = `<span class="spinner-small"></span> ${text}`;
     };
@@ -1194,16 +1194,16 @@ const App = {
       // STEP 3: Invio scommessa al server
       setStatus("Invio puntata...");
       const startTime = Date.now();
-      
+
       await Backend.placeBet(train, predictedDelay, this.betAmount, this.currentBetOdds || 2.0);
-      
+
       // Aggiorniamo subito il saldo locale per feedback immediato
       this.userBalance -= this.betAmount;
       this.updateWalletUI();
 
       // STEP 4: Sincronizzazione finale
       setStatus("Sincronizzazione...");
-      
+
       // Assicuriamoci che il caricamento duri almeno 1500ms per un effetto solido ma veloce
       const elapsed = Date.now() - startTime;
       if (elapsed < 1000) await new Promise(r => setTimeout(r, 1000 - elapsed));
@@ -1212,10 +1212,10 @@ const App = {
       btn.classList.remove('loading');
       btn.classList.add('success');
       btn.innerHTML = 'Puntata Confermata! ✨';
-      
+
       await this.refreshBets();
       this.stopBetTimer();
-      
+
       setTimeout(() => {
         this.closeBetModal();
         this.showToast(`Scommessa piazzata! -${this.betAmount}🪙`, '🎲');
@@ -1223,13 +1223,13 @@ const App = {
 
     } catch (err) {
       console.error("Errore piazzamento:", err);
-      
+
       // RIPRISTINO INTERFACCIA
       btn.disabled = false;
       btn.classList.remove('loading');
       modalContent.classList.remove('loading-active');
       btn.innerHTML = originalContent;
-      
+
       if (err.message !== 'Email non verificata' && !err.message.includes('insufficienti') && !err.message.includes('valido')) {
         this.showToast("Errore durante il piazzamento. Riprova.", "❌");
       }
