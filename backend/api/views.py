@@ -705,6 +705,41 @@ def global_bet_stats(request):
 
 @api_view(["GET"])
 @permission_classes([AllowAny])
+def train_bet_distribution(request, train_id):
+    """
+    Ritorna la distribuzione delle scommesse attive per fascia di ritardo
+    su un treno specifico. Usato per il grafico nel modal.
+    """
+    bets = Bet.objects.filter(train_id=train_id, status=Bet.STATUS_ACTIVE)
+
+    bands = [
+        {"label": "0-4m",  "key": "ontime",  "min": 0,  "max": 4},
+        {"label": "5-14m", "key": "light",   "min": 5,  "max": 14},
+        {"label": "15-29m","key": "medium",  "min": 15, "max": 29},
+        {"label": "30-59m","key": "heavy",   "min": 30, "max": 59},
+        {"label": "60m+",  "key": "extreme", "min": 60, "max": 9999},
+    ]
+
+    result = []
+    for band in bands:
+        band_bets = bets.filter(
+            predicted_delay__gte=band["min"],
+            predicted_delay__lte=band["max"]
+        )
+        count = band_bets.count()
+        pool = sum(b.amount for b in band_bets)
+        result.append({
+            "label": band["label"],
+            "key": band["key"],
+            "count": count,
+            "pool": pool,
+        })
+
+    return Response({"bands": result, "total": bets.count()})
+
+
+@api_view(["GET"])
+@permission_classes([AllowAny])
 def leaderboard(request):
     users = UserProfile.objects.order_by("-balance")[:20]
     return Response(LeaderboardSerializer(users, many=True).data)

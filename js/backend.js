@@ -215,6 +215,11 @@ const Backend = {
   // STATS E LEADERBOARD
   // ============================================================
 
+  async getTrainBetDistribution(trainId) {
+    const resp = await fetch(`${BACKEND_BASE}/bets/distribution/${trainId}/`);
+    return resp.ok ? resp.json() : { bands: [], total: 0 };
+  },
+
   async getGlobalBetStats() {
     const resp = await fetch(`${BACKEND_BASE}/bets/stats/`);
     return resp.ok ? resp.json() : {};

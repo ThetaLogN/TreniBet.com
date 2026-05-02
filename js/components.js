@@ -240,8 +240,18 @@ const Components = {
             <div id="bet-win-preview" class="bet-win-preview" style="text-align: center; margin: 15px 0; padding: 10px; background: rgba(76, 175, 80, 0.1); border-radius: 8px; color: #4CAF50; font-weight: 800;">
               Vincita potenziale: <span id="win-preview-value">${typeof odds === 'number' ? (50 * odds).toFixed(0) : '---'}</span> $
             </div>
+
+            <div class="bet-distribution-widget" id="bet-distribution-widget">
+              <div class="bet-distribution-header">
+                <h4>📊 Puntate degli altri</h4>
+                <span class="bet-distribution-total" id="bet-dist-total">...</span>
+              </div>
+              <div class="bet-chart-container" id="bet-chart-container">
+                <div class="bet-chart-loading"><span class="spinner-small" style="border-color: var(--text2); border-top-color: var(--accent);"></span> Caricamento...</div>
+              </div>
+            </div>
             
-            <button id="btn-bet-main" class="btn-bet-confirm" onclick="App.prepareBet('${train.id}')" style="margin-top: 0px;">Calcola Quota</button>
+            <button id="btn-bet-main" class="btn-bet-confirm" onclick="App.prepareBet('${train.id}')" style="margin-top: 12px;">Calcola Quota</button>
             <p class="bet-disclaimer">Saldo attuale: <strong style="color: var(--accent);">${App.userBalance || 0} $</strong></p>
           </div>
         </div>

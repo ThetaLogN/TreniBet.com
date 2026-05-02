@@ -29,6 +29,7 @@ urlpatterns = [
     path('bets/stats/', views.global_bet_stats),
     path('bets/odds/<str:train_id>/', views.get_odds),
     path('bets/wins/', views.global_wins),
+    path('bets/distribution/<str:train_id>/', views.train_bet_distribution),
 
     # ---- Leaderboard ----
     path('leaderboard/', views.leaderboard),

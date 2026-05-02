@@ -806,6 +806,158 @@ const App = {
     // Carica immediatamente la quota UFFICIALE per il ritardo attuale
     this.prepareBet(train.id);
     this.updateEstimatedArrival(this.currentTrainDelay);
+
+    // Carica il grafico distribuzione scommesse
+    this.loadBetDistributionChart(train.id);
+  },
+
+  async loadBetDistributionChart(trainId) {
+    const container = document.getElementById('bet-chart-container');
+    const totalEl = document.getElementById('bet-dist-total');
+    if (!container) return;
+
+    try {
+      const data = await Backend.getTrainBetDistribution(trainId);
+      const bands = data.bands || [];
+      const total = data.total || 0;
+
+      if (totalEl) totalEl.textContent = `${total} puntate`;
+
+      if (total === 0) {
+        container.innerHTML = '<div class="bet-chart-empty">Nessuna puntata su questo treno. Sii il primo! 🎯</div>';
+        return;
+      }
+
+      // Crea il canvas
+      container.innerHTML = '<canvas id="bet-dist-canvas"></canvas>';
+      const canvas = document.getElementById('bet-dist-canvas');
+      if (!canvas) return;
+
+      const dpr = window.devicePixelRatio || 1;
+      const rect = container.getBoundingClientRect();
+      canvas.width = rect.width * dpr;
+      canvas.height = rect.height * dpr;
+      const ctx = canvas.getContext('2d');
+      ctx.scale(dpr, dpr);
+
+      const W = rect.width;
+      const H = rect.height;
+      const padLeft = 35;
+      const padRight = 15;
+      const padTop = 15;
+      const padBottom = 28;
+      const chartW = W - padLeft - padRight;
+      const chartH = H - padTop - padBottom;
+
+      const labels = bands.map(b => b.label);
+      const counts = bands.map(b => b.count);
+      const pools = bands.map(b => b.pool);
+      const maxCount = Math.max(...counts, 1);
+      const n = labels.length;
+
+      // Colori per le fasce
+      const bandColors = ['#4CAF50', '#FFC107', '#FF9800', '#F44336', '#9C27B0'];
+
+      // Sfondo griglia
+      const isDark = document.body.classList.contains('dark-mode');
+      const gridColor = isDark ? 'rgba(255,255,255,0.08)' : 'rgba(0,0,0,0.06)';
+      const textColor = isDark ? 'rgba(255,255,255,0.5)' : 'rgba(0,0,0,0.45)';
+
+      // Linee griglia orizzontali
+      ctx.strokeStyle = gridColor;
+      ctx.lineWidth = 1;
+      const gridSteps = 4;
+      for (let i = 0; i <= gridSteps; i++) {
+        const y = padTop + (chartH / gridSteps) * i;
+        ctx.beginPath();
+        ctx.moveTo(padLeft, y);
+        ctx.lineTo(W - padRight, y);
+        ctx.stroke();
+
+        // Label asse Y
+        const val = Math.round(maxCount * (1 - i / gridSteps));
+        ctx.fillStyle = textColor;
+        ctx.font = '10px Inter, sans-serif';
+        ctx.textAlign = 'right';
+        ctx.fillText(val, padLeft - 6, y + 3);
+      }
+
+      // Punti del grafico
+      const points = counts.map((c, i) => ({
+        x: padLeft + (chartW / (n - 1)) * i,
+        y: padTop + chartH - (c / maxCount) * chartH,
+      }));
+
+      // Gradient fill sotto la linea
+      const gradient = ctx.createLinearGradient(0, padTop, 0, padTop + chartH);
+      gradient.addColorStop(0, isDark ? 'rgba(225, 29, 72, 0.35)' : 'rgba(225, 29, 72, 0.2)');
+      gradient.addColorStop(1, 'rgba(225, 29, 72, 0)');
+
+      // Area sotto la curva (con curve smussate)
+      ctx.beginPath();
+      ctx.moveTo(points[0].x, padTop + chartH);
+      ctx.lineTo(points[0].x, points[0].y);
+      for (let i = 1; i < points.length; i++) {
+        const cp1x = (points[i - 1].x + points[i].x) / 2;
+        const cp1y = points[i - 1].y;
+        const cp2x = cp1x;
+        const cp2y = points[i].y;
+        ctx.bezierCurveTo(cp1x, cp1y, cp2x, cp2y, points[i].x, points[i].y);
+      }
+      ctx.lineTo(points[points.length - 1].x, padTop + chartH);
+      ctx.closePath();
+      ctx.fillStyle = gradient;
+      ctx.fill();
+
+      // Linea principale (curva smussata)
+      ctx.beginPath();
+      ctx.moveTo(points[0].x, points[0].y);
+      for (let i = 1; i < points.length; i++) {
+        const cp1x = (points[i - 1].x + points[i].x) / 2;
+        const cp1y = points[i - 1].y;
+        const cp2x = cp1x;
+        const cp2y = points[i].y;
+        ctx.bezierCurveTo(cp1x, cp1y, cp2x, cp2y, points[i].x, points[i].y);
+      }
+      ctx.strokeStyle = '#e11d48';
+      ctx.lineWidth = 2.5;
+      ctx.stroke();
+
+      // Punti + etichette
+      points.forEach((p, i) => {
+        // Cerchio colorato per fascia
+        ctx.beginPath();
+        ctx.arc(p.x, p.y, 5, 0, Math.PI * 2);
+        ctx.fillStyle = bandColors[i];
+        ctx.fill();
+        ctx.strokeStyle = isDark ? '#262626' : '#ffffff';
+        ctx.lineWidth = 2;
+        ctx.stroke();
+
+        // Valore sopra il punto (solo se > 0)
+        if (counts[i] > 0) {
+          ctx.fillStyle = isDark ? '#ffffff' : '#171717';
+          ctx.font = 'bold 10px Inter, sans-serif';
+          ctx.textAlign = 'center';
+          ctx.fillText(counts[i], p.x, p.y - 10);
+
+          // Pool sotto il punto
+          ctx.fillStyle = textColor;
+          ctx.font = '9px Inter, sans-serif';
+          ctx.fillText(`${pools[i]}$`, p.x, p.y - 0);
+        }
+
+        // Label asse X
+        ctx.fillStyle = bandColors[i];
+        ctx.font = 'bold 10px Inter, sans-serif';
+        ctx.textAlign = 'center';
+        ctx.fillText(labels[i], p.x, H - 5);
+      });
+
+    } catch (e) {
+      console.error('Errore caricamento distribuzione:', e);
+      container.innerHTML = '<div class="bet-chart-empty">Errore caricamento dati</div>';
+    }
   },
 
   updateDynamicOdds(predictedDelay) {
