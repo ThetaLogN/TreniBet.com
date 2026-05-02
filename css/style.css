@@ -89,7 +89,7 @@ body.dark-mode .user-wallet {
 .search-bar-container{position:relative;display:flex;flex-wrap:wrap;gap:8px;margin-bottom:12px}
 .search-bar{flex:1;display:flex;align-items:center;background:var(--card);border:1px solid var(--border);border-radius:var(--radius);padding:0 12px;gap:8px}
 .search-bar .search-icon{font-size:16px}
-.search-input{flex:1;border:none;background:none;padding:12px 0;font-size:14px;color:var(--text);outline:none;font-family:inherit}
+.search-input{flex:1;border:none;background:none;padding:12px 0;font-size:16px;color:var(--text);outline:none;font-family:inherit}
 .sort-control{display:flex;align-items:center;gap:4px;background:var(--card);border:1px solid var(--border);border-radius:var(--radius);padding:0 14px;font-size:13px;font-weight:600;cursor:pointer;color:var(--text)}
 
 /* SEARCH SUGGESTIONS */
