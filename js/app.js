@@ -832,6 +832,23 @@ const App = {
     this.updateEstimatedArrival(predictedDelay);
   },
 
+  adjustSlider(delta) {
+    const slider = document.getElementById('bet-delay-slider');
+    if (!slider) return;
+
+    let newValue = parseInt(slider.value) + delta;
+    if (newValue < parseInt(slider.min)) newValue = parseInt(slider.min);
+    if (newValue > parseInt(slider.max)) newValue = parseInt(slider.max);
+
+    slider.value = newValue;
+
+    // Trigger UI updates
+    const display = document.getElementById('bet-delay-value');
+    if (display) display.textContent = newValue + 'm';
+
+    this.updateDynamicOdds(newValue);
+  },
+
   updateEstimatedArrival(delayMinutes) {
     if (!this.currentTrainPlannedArrival) return;
     

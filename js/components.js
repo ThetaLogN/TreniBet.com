@@ -216,7 +216,9 @@ const Components = {
             <div class="bet-input-group">
               <label>Ritardo finale previsto all'arrivo (minuti):</label>
               <div class="bet-slider-row">
+                <button class="slider-arrow" onclick="App.adjustSlider(-1)">❮</button>
                 <input type="range" min="0" max="400" value="${sliderValue}" class="bet-slider" id="bet-delay-slider" oninput="document.getElementById('bet-delay-value').textContent = this.value + 'm'; App.updateDynamicOdds(this.value)">
+                <button class="slider-arrow" onclick="App.adjustSlider(1)">❯</button>
                 <span class="bet-delay-display" id="bet-delay-value">${sliderValue}m</span>
               </div>
               <div style="font-size: 11px; color: var(--text2); margin-top: 4px;">
