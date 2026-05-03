@@ -242,9 +242,8 @@ const Components = {
             </div>
             
             <button id="btn-bet-main" class="btn-bet-confirm" onclick="App.prepareBet('${train.id}')" style="margin-top: 12px;">Calcola Quota</button>
-            <p class="bet-disclaimer">Saldo attuale: <strong style="color: var(--accent);">${App.userBalance || 0} $</strong></p>
 
-             <div class="bet-distribution-widget" id="bet-distribution-widget">
+             <div class="bet-distribution-widget" id="bet-distribution-widget" style="margin-top: 15px;">
               <div class="bet-distribution-header">
                 <h4>Puntate degli altri</h4>
                 <span class="bet-distribution-total" id="bet-dist-total">...</span>
@@ -253,6 +252,8 @@ const Components = {
                 <div class="bet-chart-loading"><span class="spinner-small" style="border-color: var(--text2); border-top-color: var(--accent);"></span> Caricamento...</div>
               </div>
             </div>
+
+            <p class="bet-disclaimer" style="margin-top: 15px;">Saldo attuale: <strong style="color: var(--accent);">${App.userBalance || 0} $</strong></p>
             
           </div>
         </div>
