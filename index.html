@@ -1,75 +1,170 @@
 <!DOCTYPE html>
 <html lang="it">
-
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0">
-  <title>TreniBet — Scommetti sui Ritardi dei Treni in Tempo Reale</title>
-  <meta name="description" content="Scommetti sui ritardi dei treni italiani con TreniBet. Vivi l'emozione della sfida, scala la classifica e vinci token ogni giorno.">
-  
-  <!-- Open Graph / Facebook -->
-  <meta property="og:type" content="website">
-  <meta property="og:url" content="https://trenibet.com/">
-  <meta property="og:title" content="TreniBet — Scommetti sui Ritardi dei Treni">
-  <meta property="og:description" content="La prima piattaforma in tempo reale per scommettere sui ritardi dei treni in Italia.">
-  <meta property="og:image" content="https://trenibet.com/assets/logo.png">
+  <title>Sito in Manutenzione - TreniBet</title>
+  <meta name="robots" content="noindex, nofollow">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;800&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --bg-color: #0f172a;
+      --text-main: #f8fafc;
+      --text-muted: #94a3b8;
+      --accent: #3b82f6;
+      --accent-glow: rgba(59, 130, 246, 0.5);
+    }
+    
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+    
+    body {
+      background-color: var(--bg-color);
+      color: var(--text-main);
+      font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      min-height: 100vh;
+      text-align: center;
+      overflow: hidden;
+      position: relative;
+    }
+    
+    /* Subtle background grid */
+    body::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background-image: 
+        linear-gradient(to right, rgba(255,255,255,0.02) 1px, transparent 1px),
+        linear-gradient(to bottom, rgba(255,255,255,0.02) 1px, transparent 1px);
+      background-size: 40px 40px;
+      z-index: 0;
+    }
+    
+    .container {
+      position: relative;
+      z-index: 1;
+      max-width: 600px;
+      padding: 2rem;
+      background: rgba(15, 23, 42, 0.7);
+      backdrop-filter: blur(12px);
+      border-radius: 24px;
+      border: 1px solid rgba(255,255,255,0.05);
+      box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.5);
+      animation: float 6s ease-in-out infinite;
+    }
+    
+    @keyframes float {
+      0%, 100% { transform: translateY(0px); }
+      50% { transform: translateY(-10px); }
+    }
+    
+    .icon-wrapper {
+      width: 80px;
+      height: 80px;
+      margin: 0 auto 1.5rem;
+      background: rgba(59, 130, 246, 0.1);
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      position: relative;
+    }
+    
+    .icon-wrapper::after {
+      content: '';
+      position: absolute;
+      inset: -10px;
+      border-radius: 50%;
+      border: 2px solid var(--accent);
+      opacity: 0;
+      animation: pulse 2s cubic-bezier(0.4, 0, 0.6, 1) infinite;
+    }
+    
+    @keyframes pulse {
+      0% { opacity: 0.5; transform: scale(0.8); }
+      100% { opacity: 0; transform: scale(1.3); }
+    }
+    
+    .icon {
+      width: 40px;
+      height: 40px;
+      color: var(--accent);
+    }
+    
+    h1 {
+      font-size: 2.5rem;
+      font-weight: 800;
+      letter-spacing: -0.025em;
+      margin-bottom: 1rem;
+      background: linear-gradient(135deg, #fff 0%, #cbd5e1 100%);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+    }
+    
+    p {
+      font-size: 1.125rem;
+      color: var(--text-muted);
+      line-height: 1.6;
+      margin-bottom: 2rem;
+    }
+    
+    .status-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      padding: 8px 16px;
+      background: rgba(245, 158, 11, 0.1);
+      border: 1px solid rgba(245, 158, 11, 0.2);
+      border-radius: 9999px;
+      color: #fcd34d;
+      font-size: 0.875rem;
+      font-weight: 600;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+    }
+    
+    .dot {
+      width: 8px;
+      height: 8px;
+      background-color: #fbbf24;
+      border-radius: 50%;
+      animation: blink 1.5s ease-in-out infinite;
+    }
+    
+    @keyframes blink {
+      0%, 100% { opacity: 1; }
+      50% { opacity: 0.4; }
+    }
 
-  <!-- Twitter -->
-  <meta property="twitter:card" content="summary_large_image">
-  <meta property="twitter:url" content="https://trenibet.com/">
-  <meta property="twitter:title" content="TreniBet — Scommetti sui Ritardi dei Treni">
-  <meta property="twitter:description" content="Vivi l'emozione della sfida sui binari. Scommetti e scala la classifica!">
-  <meta property="twitter:image" content="https://trenibet.com/assets/logo.png">
-
-  <link rel="stylesheet" href="css/style.css?v=86">
-  <link rel="icon" type="image/png" href="assets/logo.png?v=2">
-  <link rel="apple-touch-icon" href="assets/logo.png?v=2">
+    @media (max-width: 640px) {
+      .container {
+        margin: 1rem;
+        padding: 2rem 1.5rem;
+      }
+      h1 { font-size: 2rem; }
+    }
+  </style>
 </head>
-
 <body>
-
-  <!-- HEADER -->
-  <header class="app-header">
-    <div class="logo" onclick="App.showHomePage()" style="cursor: pointer;" title="Torna alla Home">
-      <img src="assets/logo.png?v=2" alt="TreniBet Logo" class="logo-img">
-      <span class="logo-text">TreniBET</span>
+  <div class="container">
+    <div class="icon-wrapper">
+      <svg class="icon" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10.325 4.317c.426-1.756 2.924-1.756 3.35 0a1.724 1.724 0 002.573 1.066c1.543-.94 3.31.826 2.37 2.37a1.724 1.724 0 001.065 2.572c1.756.426 1.756 2.924 0 3.35a1.724 1.724 0 00-1.066 2.573c.94 1.543-.826 3.31-2.37 2.37a1.724 1.724 0 00-2.572 1.065c-.426 1.756-2.924 1.756-3.35 0a1.724 1.724 0 00-2.573-1.066c-1.543.94-3.31-.826-2.37-2.37a1.724 1.724 0 00-1.065-2.572c-1.756-.426-1.756-2.924 0-3.35a1.724 1.724 0 001.066-2.573c-.94-1.543.826-3.31 2.37-2.37.996.608 2.296.07 2.572-1.065z"></path>
+        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"></path>
+      </svg>
     </div>
-    <div class="header-actions">
-      <div id="user-wallet" class="user-wallet hidden">
-        <span id="user-tokens" class="wallet-amount">0</span>
-        <span class="wallet-icon">$</span>
-      </div>
-      <button class="btn-login" id="btn-login-header" onclick="App.showLoginModal()">Accedi</button>
-      <button class="btn-login hidden" id="btn-profile-header" onclick="App.toggleMenu()"
-        title="Apri menu">@User</button>
+    <h1>Sito Temporaneamente Non Disponibile</h1>
+    <p>Stiamo effettuando un intervento di manutenzione programmata per migliorare le prestazioni e la sicurezza del nostro sistema. Torneremo online al più presto.</p>
+    <div class="status-badge">
+      <div class="dot"></div>
+      Manutenzione in corso
     </div>
-
-    <!-- Dropdown Menu -->
-    <div class="dropdown-menu" id="dropdown-menu">
-
-      <a href="#" id="menu-bets-link" class="hidden" onclick="App.showMyBetsPage()">Le Mie Scommesse </a>
-      <a href="#" id="menu-leaderboard-link" onclick="App.showLeaderboardPage()">Classifica</a>
-      <a href="#" id="menu-wins-link" onclick="App.showWinsPage()">Ultime Vincite</a>
-      <a href="#" id="menu-verify-link" class="hidden" onclick="App.resendVerificationEmail()">Invia email di verifica</a>
-      <a href="#" id="dark-mode-toggle" onclick="App.toggleDarkMode()">Modalità Scura</a>
-      <a href="#" id="menu-logout-link" class="hidden" onclick="App.logout()">Esci</a>
-    </div>
-  </header>
-
-  <!-- MAIN CONTENT -->
-  <main id="main-content"></main>
-
-  <!-- Firebase Libraries (Compat version for simplicity in non-module environment) -->
-  <script src="https://www.gstatic.com/firebasejs/10.9.0/firebase-app-compat.js"></script>
-  <script src="https://www.gstatic.com/firebasejs/10.9.0/firebase-auth-compat.js"></script>
-  <script src="https://www.gstatic.com/firebasejs/10.9.0/firebase-firestore-compat.js"></script>
-
-  <script src="js/firebase.js?v=79"></script>
-  <script src="js/data.js?v=79"></script>
-  <script src="js/api.js?v=79"></script>
-  <script src="js/components.js?v=83"></script>
-  <script src="js/backend.js?v=80"></script>
-  <script src="js/app.js?v=83"></script>
+  </div>
 </body>
-
 </html>
